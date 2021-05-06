@@ -10,3 +10,10 @@ export interface Key {
   asset: string,
   emoji: string,
 }
+
+export interface ReactPlayerState {
+  played: number;
+  playedSeconds: number;
+  loaded: number;
+  loadedSeconds: number;
+}

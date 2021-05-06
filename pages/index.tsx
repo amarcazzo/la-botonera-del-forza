@@ -1,13 +1,15 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import Head from "next/head";
-import { Key } from "../interfaces";
+import Image from 'next/image';
+import { Key, ReactPlayerState } from "../interfaces";
 import ReactPlayer from "react-player";
+import Player from "../components/Player";
 
 const config = {
   BUCKET_URL: "https://storage.googleapis.com/la-botonera-del-forza",
 };
 
-const items = [
+const test = [
   {
     id: 1,
     title: "No se de que me hablas, hermano",
@@ -50,15 +52,59 @@ const items = [
     title: "Negro hijo de puta!",
     asset: `${config.BUCKET_URL}/negro-hijo-de-puta.mp3`,
   },
+  {
+    id: 8,
+    emoji: "😗",
+    title: "Silbido",
+    asset: `${config.BUCKET_URL}/silbido.m4a`,
+  },
+  {
+    id: 9,
+    emoji: "🤪",
+    title: "Sos un tarado",
+    asset: `${config.BUCKET_URL}/sos-un-tarado.m4a`,
+  },
+  {
+    id: 10,
+    emoji: "🤯",
+    title: "Tengo la cabeza en cualquier lado",
+    asset: `${config.BUCKET_URL}/tengo-la-cabeza-en-cualquier-lado.mp3`,
+  },
 ] as Key[];
 
 const IndexPage = () => {
+  const [items, _] = useState<Array<Key>>(test);
   const [key, setKey] = useState<Key>(items[0]);
   const [playing, setPlaying] = useState<boolean>(true);
-  const player = useRef(null);
+  const [duration, setDuration] = useState<number>(0);
+  const [playtime, setPlaytime] = useState<number>(0);
 
   const handleClick = (idx: number) => {
+    if (player && player.current) {
+      const { current } = player;
+      setDuration(current.getDuration());
+    }
+
+    setPlaying(true);
     setKey(items[idx]);
+  };
+
+  const handleSkipBack = () => {
+    key.id > 1 ? setKey(items[key.id - 1]) : null;
+    setPlaying(true);
+  };
+
+  const handleSkipForward = () => {
+    key.id < items.length ? setKey(items[key.id + 1]) : null;
+    setPlaying(true);
+  };
+
+  const handleProgress = ({
+    loadedSeconds,
+    playedSeconds,
+  }: ReactPlayerState) => {
+    setDuration(loadedSeconds);
+    setPlaytime(playedSeconds);
   };
 
   return (
@@ -69,17 +115,16 @@ const IndexPage = () => {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
 
-      <section className="hero is-white is-fullheight p-6">
-        <div className="hero-head">
-          <div className="container has-text-centered">
-            <p className="title">#LaBotoneraDelForza</p>
-          </div>
+      <section>
+        <div className="header has-text-centered p-4">
+          <p className="title m-0">#LaBotoneraDelForza</p>
+          <Image src='/assets/forza.png' alt="#ElForza" width="98" height="98" />
         </div>
 
-        <div className="hero-body">
-          <div className="columns">
+        <section className="main p-4">
+          <div className="grid">
             {items.map((item, i) => (
-              <div className="column" key={item.id}>
+              <div key={item.id}>
                 <button
                   data-tooltip={item.title}
                   className="button is-info is-light key"
@@ -90,36 +135,28 @@ const IndexPage = () => {
               </div>
             ))}
           </div>
-        </div>
+        </section>
 
-        <div className="hero-foot h-10">
-          <h3>Reproduciendo: {key?.title}</h3>
-          {playing ? (
-            <button
-              className="button is-secondary"
-              onClick={() => setPlaying(false)}
-            >
-              <i className="ri-pause-line"></i>
-            </button>
-          ) : (
-            <button
-              className="button is-secondary"
-              onClick={() => setPlaying(true)}
-            >
-              <i className="ri-play-line"></i>
-            </button>
-          )}
-          <div className="container has-text-centered">
-            <ReactPlayer
-              url={key.asset}
-              playing={playing}
-              width={"100%"}
-              height={"100%"}
-              ref={player}
-              controls
-            />
-          </div>
-        </div>
+        <section className="footer has-text-centered p-4">
+          <Player
+            playing={playing}
+            handleSkipBack={handleSkipBack}
+            handleSkipForward={handleSkipForward}
+            setPlaying={setPlaying}
+            nowPlaying={key.title}
+            duration={duration}
+            playtime={playtime}
+          />
+
+          <ReactPlayer
+            url={key.asset}
+            playing={playing}
+            onEnded={() => setPlaying(false)}
+            onProgress={(state) => handleProgress(state)}
+            width={"100%"}
+            height={"100%"}
+          />
+        </section>
       </section>
     </div>
   );
