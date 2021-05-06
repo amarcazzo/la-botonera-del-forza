@@ -4,7 +4,7 @@ import { Key } from "../interfaces";
 import ReactPlayer from "react-player";
 
 const config = {
-  BUCKET_URL: "https://storage.cloud.google.com/la-botonera-del-forza",
+  BUCKET_URL: "https://storage.googleapis.com/la-botonera-del-forza",
 };
 
 const items = [
@@ -58,7 +58,6 @@ const IndexPage = () => {
   const player = useRef(null);
 
   const handleClick = (idx: number) => {
-    console.log(player);
     setKey(items[idx]);
   };
 
