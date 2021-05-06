@@ -29,7 +29,7 @@ const items = [
   {
     id: 4,
     emoji: "👨‍🦯",
-    title: "No te dejes engañar",
+    title: "No te dejes engañar, gordo!",
     asset: `${config.BUCKET_URL}/no-te-dejes-enganar.mp3`,
   },
   {
@@ -49,7 +49,7 @@ const items = [
     emoji: "👦🏿",
     title: "Negro hijo de puta!",
     asset: `${config.BUCKET_URL}/negro-hijo-de-puta.mp3`,
-  }
+  },
 ] as Key[];
 
 const IndexPage = () => {
@@ -96,19 +96,27 @@ const IndexPage = () => {
         <div className="hero-foot h-10">
           <h3>Reproduciendo: {key?.title}</h3>
           {playing ? (
-            <button onClick={() => setPlaying(false)}>Pause</button>
+            <button
+              className="button is-secondary"
+              onClick={() => setPlaying(false)}
+            >
+              <i className="ri-pause-line"></i>
+            </button>
           ) : (
-            <button onClick={() => setPlaying(true)}>Play</button>
+            <button
+              className="button is-secondary"
+              onClick={() => setPlaying(true)}
+            >
+              <i className="ri-play-line"></i>
+            </button>
           )}
           <div className="container has-text-centered">
             <ReactPlayer
-              light={true}
               url={key.asset}
               playing={playing}
               width={"100%"}
               height={"100%"}
               ref={player}
-              config={{ file: {} }}
               controls
             />
           </div>
