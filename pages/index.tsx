@@ -73,18 +73,13 @@ const test = [
 ] as Key[];
 
 const IndexPage = () => {
-  const [items, _] = useState<Array<Key>>(test);
+  const [items] = useState<Array<Key>>(test);
   const [key, setKey] = useState<Key>(items[0]);
   const [playing, setPlaying] = useState<boolean>(true);
   const [duration, setDuration] = useState<number>(0);
   const [playtime, setPlaytime] = useState<number>(0);
 
   const handleClick = (idx: number) => {
-    if (player && player.current) {
-      const { current } = player;
-      setDuration(current.getDuration());
-    }
-
     setPlaying(true);
     setKey(items[idx]);
   };
