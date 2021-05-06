@@ -8,9 +8,14 @@
     "type-check": "tsc"
   },
   "dependencies": {
+    "bulma": "^0.9.2",
+    "bulma-tooltip": "^3.0.2",
     "next": "latest",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "react-player": "^2.9.0",
+    "remixicon": "^2.5.0",
+    "sass": "^1.32.12"
   },
   "devDependencies": {
     "@types/node": "^12.12.21",
