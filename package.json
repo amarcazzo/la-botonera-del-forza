@@ -41,7 +41,7 @@
   "license": "MIT",
   "husky": {
     "hooks": {
-      "pre-push": "build",
+      "pre-push": "yarn build",
       "pre-commit": "lint-staged"
     }
   },
