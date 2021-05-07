@@ -1,8 +1,10 @@
-@import '../node_modules/bulma/css/bulma.min.css';
-@import '../node_modules/bulma-tooltip/dist/css/bulma-tooltip.min.css';
-@import '../node_modules/remixicon/fonts/remixicon.css';
+@import "../node_modules/bulma/bulma.sass";
+@import "../node_modules/bulma-tooltip/dist/css/bulma-tooltip.min.css";
+@import "../node_modules/remixicon/fonts/remixicon.css";
+@import "../node_modules/emoji-mart/css/emoji-mart.css";
 
-html, body {
+html,
+body {
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
@@ -19,7 +21,7 @@ html, body {
 }
 
 a {
-  color: #DBDBDB;
+  color: #dbdbdb;
   text-decoration: none;
 }
 
@@ -62,17 +64,67 @@ img {
   }
 }
 
+.key-preview {
+  margin: 0 1rem;
+}
+
+.form-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+
+  input {
+    @extend .input;
+  }
+}
+
+.hidden {
+  display: none !important;
+}
+
 .grid {
   display: grid;
-  gap: 5px;
+  gap: 10px;
   grid-template-columns: repeat((12, 1fr));
-  width: 70%;
+}
+
+.player {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .player-buttons {
+    margin: 1em 0;
+  }
+
+  .player-bar {
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+    margin: 1em 0;
+
+    .progress {
+      margin: 0;
+      height: 25px;
+    }
+  }
 }
 
 @media (max-width: 1024px) {
   .grid {
     gap: 2rem;
     grid-template-columns: repeat((6, 1fr));
+  }
+
+  .key-preview {
+    margin: 1rem 0;
   }
 }
 
@@ -109,7 +161,8 @@ img {
     grid-template-columns: repeat((2, 1fr));
   }
 
-  html, body {
+  html,
+  body {
     overflow: auto;
   }
 }

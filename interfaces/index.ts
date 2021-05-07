@@ -5,10 +5,10 @@
 // import { User } from 'path/to/interfaces';
 
 export interface Key {
-  id: number,
-  title: string,
-  asset: string,
-  emoji: string,
+  id?: number;
+  title: string;
+  asset: string;
+  emoji: string;
 }
 
 export interface ReactPlayerState {
@@ -16,4 +16,15 @@ export interface ReactPlayerState {
   playedSeconds: number;
   loaded: number;
   loadedSeconds: number;
+}
+
+export interface Emoji {
+  colons: string;
+  emoticons: Array<any>;
+  id: string;
+  name: string;
+  native: any;
+  short_names: Array<string>;
+  skin: string;
+  unified: string;
 }
