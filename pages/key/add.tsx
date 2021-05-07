@@ -1,18 +1,18 @@
-import Link from "next/link";
-import Layout from "../../components/layout";
-import { Picker, Emoji as EmojiPicker } from "emoji-mart";
-import { Emoji, Key } from "../../interfaces";
-import { useState } from "react";
-import { useRouter } from "next/dist/client/router";
+import Link from 'next/link';
+import Layout from '../../components/layout';
+import { Picker, Emoji, EmojiData } from 'emoji-mart';
+import { Key } from '../../interfaces';
+import { useState } from 'react';
+import { useRouter } from 'next/dist/client/router';
 
 const AddKey = () => {
   const router = useRouter();
   const [newKey, setNewKey] = useState<Key>({
-    title: "",
-    asset: "",
-    emoji: "smiley",
+    title: '',
+    asset: '',
+    emoji: 'smiley'
   });
-  const [filename, setFilename] = useState("la-botonera-del-forza.mp3");
+  const [filename, setFilename] = useState('la-botonera-del-forza.mp3');
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [fileLoading, setFileLoading] = useState<boolean>(false);
 
@@ -20,14 +20,14 @@ const AddKey = () => {
     event.preventDefault();
     setSubmitting(true);
 
-    fetch("/api/key", {
+    fetch('/api/key', {
       body: JSON.stringify(newKey),
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json'
       },
-      method: "POST",
+      method: 'POST'
     })
-      .then((_) => router.push("/"))
+      .then((_) => router.push('/'))
       .catch(console.error);
   };
 
@@ -35,7 +35,7 @@ const AddKey = () => {
     const { value, name } = event.target;
     setNewKey({
       ...newKey,
-      [name]: value,
+      [name]: value
     });
   };
 
@@ -46,39 +46,42 @@ const AddKey = () => {
     setFilename(file.name);
 
     const body = new FormData();
-    body.append("file", file);
+    body.append('file', file);
 
-    const res = await fetch("/api/asset", {
+    const res = await fetch('/api/asset', {
       body,
-      method: "POST",
+      method: 'POST'
     });
 
     const [
       {
-        storage: { apiEndpoint },
+        storage: { apiEndpoint }
       },
-      { name, bucket },
+      { name, bucket }
     ] = await res.json();
 
     setNewKey({
       ...newKey,
-      asset: `${apiEndpoint}/${bucket}/${name}`,
+      asset: `${apiEndpoint}/${bucket}/${name}`
     });
     setFileLoading(false);
   };
 
-  const handleEmojiSelect = (emoji: Emoji) => {
+  const handleEmojiSelect = (emoji: EmojiData) => {
     setNewKey({
       ...newKey,
-      emoji: emoji.colons,
+      emoji: emoji.colons!
     });
   };
 
   const isDisabled = () => {
     return (
       !newKey.asset ||
+      !newKey.asset.length ||
       !newKey.emoji ||
+      !newKey.emoji.length ||
       !newKey.title ||
+      !newKey.title.length ||
       submitting ||
       fileLoading
     );
@@ -132,7 +135,7 @@ const AddKey = () => {
             </label>
             <div className="control">
               <Picker
-                darkMode={false}
+                theme="light"
                 title="Elegí el emoji"
                 onSelect={handleEmojiSelect}
                 emoji={newKey.emoji}
@@ -143,13 +146,13 @@ const AddKey = () => {
                 className="button is-info is-light key key-preview"
                 onClick={(ev) => ev.preventDefault()}
               >
-                <EmojiPicker emoji={newKey.emoji} size={32} />
+                <Emoji emoji={newKey.emoji} size={32} />
               </button>
             </div>
           </div>
 
           <div className="field is-grouped">
-            <div className={`control ${submitting ? "is-loading" : null}`}>
+            <div className={`control ${submitting ? 'is-loading' : null}`}>
               <button
                 className="button is-info"
                 onClick={handleSubmit}

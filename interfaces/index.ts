@@ -17,14 +17,3 @@ export interface ReactPlayerState {
   loaded: number;
   loadedSeconds: number;
 }
-
-export interface Emoji {
-  colons: string;
-  emoticons: Array<any>;
-  id: string;
-  name: string;
-  native: any;
-  short_names: Array<string>;
-  skin: string;
-  unified: string;
-}
