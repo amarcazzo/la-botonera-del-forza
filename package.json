@@ -20,7 +20,8 @@
     "react-dom": "^17.0.1",
     "react-player": "^2.9.0",
     "remixicon": "^2.5.0",
-    "sass": "^1.32.12"
+    "sass": "^1.32.12",
+    "vercel": "^22.0.1"
   },
   "devDependencies": {
     "@types/emoji-mart": "^3.0.4",

@@ -12,7 +12,7 @@ export const config = {
 
 const saveFile = (file: File) => {
   const buffer = readFileSync(file.path);
-  const filePath = join(process.cwd(), 'public', 'tmp', file.name!);
+  const filePath = join(process.cwd(), 'assets', file.name!);
 
   writeFileSync(filePath, buffer);
   return add(filePath, file.name!).then((file) => {
