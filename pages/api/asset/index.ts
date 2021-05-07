@@ -1,24 +1,25 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { add } from "../../../lib/asset";
-import formidable, { Fields, File, Files } from "formidable";
-import fs from "fs";
-import { join } from "path";
+import { NextApiRequest, NextApiResponse } from 'next';
+import { add } from '../../../lib/asset';
+import formidable, { Fields, File, Files } from 'formidable';
+import { readFileSync, unlinkSync, writeFileSync } from 'fs';
+import { join } from 'path';
 
 export const config = {
   api: {
-    bodyParser: false,
-  },
+    bodyParser: false
+  }
 };
 
-const saveFile = async (file: File) => {
-  const buffer = fs.readFileSync(file.path);
-  const filePath = join(process.cwd(), "public", "tmp", file.name!);
+const saveFile = (file: File) => {
+  const buffer = readFileSync(file.path);
+  const filePath = join(process.cwd(), 'public', 'tmp', file.name!);
 
-  fs.writeFileSync(filePath, buffer);
-  const newFile = await add(filePath, file.name!);
-  fs.unlinkSync(filePath);
+  writeFileSync(filePath, buffer);
+  return add(filePath, file.name!).then((file) => {
+    unlinkSync(filePath);
 
-  return newFile;
+    return file;
+  });
 };
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -27,8 +28,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return form.parse(
       req,
       async function (_err: any, _fields: Fields, files: Files) {
-        const publicFileUrl = await saveFile(files.file as File);
-        return res.status(201).send(publicFileUrl);
+        const file = await saveFile(files.file as File);
+        return res.status(201).send(file);
       }
     );
   } catch (err) {
