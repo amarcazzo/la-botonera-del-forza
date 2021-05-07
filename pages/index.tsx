@@ -27,12 +27,12 @@ const IndexPage = ({ keys }: Props) => {
   };
 
   const handleSkipBack = () => {
-    key.id > 1 ? setKey(keys[key.id - 2]) : null;
+    key.id! > 1 ? setKey(keys[key.id! - 2]) : null;
     setPlaying(true);
   };
 
   const handleSkipForward = () => {
-    key.id < keys.length ? setKey(keys[key.id]) : null;
+    key.id! < keys.length ? setKey(keys[key.id!]) : null;
     setPlaying(true);
   };
 
