@@ -1,13 +1,13 @@
-import { useState } from "react";
-import { Key, ReactPlayerState } from "../interfaces";
-import ReactPlayer from "react-player";
-import Player from "../components/player";
-import { ParsedUrlQuery } from "querystring";
-import { GetStaticPropsContext, GetStaticPropsResult } from "next";
-import { getAll } from "../lib/key";
-import Layout from "../components/layout";
-import Link from "next/link";
-import { Emoji } from "emoji-mart";
+import { useState } from 'react';
+import { Key, ReactPlayerState } from '../interfaces';
+import ReactPlayer from 'react-player';
+import Player from '../components/player';
+import { ParsedUrlQuery } from 'querystring';
+import { GetStaticPropsContext, GetStaticPropsResult } from 'next';
+import { getAll } from '../lib/key';
+import Layout from '../components/layout';
+import Link from 'next/link';
+import { Emoji } from 'emoji-mart';
 
 type Props = {
   keys: Array<Key>;
@@ -27,18 +27,20 @@ const IndexPage = ({ keys }: Props) => {
   };
 
   const handleSkipBack = () => {
-    key.id! > 1 ? setKey(keys[key.id! - 2]) : null;
+    const idx = keys.findIndex((_key) => _key.id === key.id!);
+    idx > 0 ? setKey(keys[idx - 1]) : null;
     setPlaying(true);
   };
 
   const handleSkipForward = () => {
-    key.id! < keys.length ? setKey(keys[key.id!]) : null;
+    const idx = keys.findIndex((_key) => _key.id === key.id!);
+    idx < keys.length - 1 ? setKey(keys[idx + 1]) : null;
     setPlaying(true);
   };
 
   const handleProgress = ({
     loadedSeconds,
-    playedSeconds,
+    playedSeconds
   }: ReactPlayerState) => {
     setDuration(loadedSeconds);
     setPlaytime(playedSeconds);
@@ -83,8 +85,8 @@ const IndexPage = ({ keys }: Props) => {
             playing={playing}
             onEnded={() => setPlaying(false)}
             onProgress={(state) => handleProgress(state)}
-            width={"100%"}
-            height={"100%"}
+            width={'100%'}
+            height={'100%'}
           />
         </section>
       </section>
@@ -99,8 +101,8 @@ export async function getStaticProps(
 
   return {
     props: {
-      keys,
-    },
+      keys
+    }
   };
 }
 
