@@ -5,6 +5,14 @@ import { Key } from '../../interfaces';
 import { useState } from 'react';
 import { useRouter } from 'next/dist/client/router';
 
+const specialCharactersRegexp = /([A-Z])|([a-z])|([0-9])|(\-)|(\_)|\./;
+
+const removeWhiteSpaces = (str: string) =>
+  str
+    .split('')
+    .filter((char) => specialCharactersRegexp.test(char))
+    .join('');
+
 const AddKey = () => {
   const router = useRouter();
   const [newKey, setNewKey] = useState<Key>({
@@ -62,7 +70,7 @@ const AddKey = () => {
 
     setNewKey({
       ...newKey,
-      asset: `${apiEndpoint}/${bucket}/${name}`
+      asset: `${apiEndpoint}/${bucket}/${removeWhiteSpaces(name)}`
     });
     setFileLoading(false);
   };
