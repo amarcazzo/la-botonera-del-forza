@@ -53,13 +53,13 @@ const IndexPage = ({ keys }: Props) => {
           <div className="grid">
             {keys.map((item, i) => (
               <div className="has-text-centered" key={item.id}>
-                <button
+                <span
                   data-tooltip={item.title}
                   className="button is-info is-light key"
                   onClick={() => handleClick(i)}
                 >
                   <Emoji emoji={item.emoji} size={32} />
-                </button>
+                </span>
               </div>
             ))}
           </div>
