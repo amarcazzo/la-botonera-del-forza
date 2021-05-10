@@ -3,7 +3,7 @@ import { Key, ReactPlayerState } from '../interfaces';
 import ReactPlayer from 'react-player';
 import Player from '../components/player';
 import { ParsedUrlQuery } from 'querystring';
-import { GetStaticPropsContext, GetStaticPropsResult } from 'next';
+import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { getAll } from '../lib/key';
 import Layout from '../components/layout';
 import Link from 'next/link';
@@ -94,9 +94,9 @@ const IndexPage = ({ keys }: Props) => {
   );
 };
 
-export async function getStaticProps(
-  _context: GetStaticPropsContext<ParsedUrlQuery>
-): Promise<GetStaticPropsResult<any>> {
+export async function getServerSideProps(
+  _context: GetServerSidePropsContext<ParsedUrlQuery>
+): Promise<GetServerSidePropsResult<any>> {
   const keys = await getAll();
 
   return {
