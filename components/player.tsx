@@ -1,3 +1,5 @@
+import { Key } from "../interfaces";
+
 const formatSeconds = (seconds: number) => {
   const date = new Date(0);
   date.setSeconds(seconds);
@@ -6,7 +8,7 @@ const formatSeconds = (seconds: number) => {
 
 type Props = {
   playing: boolean;
-  nowPlaying: string;
+  nowPlaying: Key;
   duration: number;
   playtime: number;
   handleSkipBack: Function;
@@ -26,7 +28,7 @@ const Player = ({
   <div className="player">
     <div className="player-header">
       <h3>
-        Reproduciendo: <em>"{nowPlaying}"</em>
+        Reproduciendo: <em>"{nowPlaying.title}"</em>
       </h3>
     </div>
 
@@ -58,6 +60,13 @@ const Player = ({
       >
         <i className="ri-skip-forward-line"></i>
       </button>
+      <a
+        className="button is-secondary m-1 decoration-none"
+        href={nowPlaying.asset}
+        download
+      >
+        <i className="ri-download-line"></i>
+      </a>
     </div>
 
     <div className="player-bar">

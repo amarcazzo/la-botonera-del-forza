@@ -75,7 +75,7 @@ const IndexPage = ({ keys }: Props) => {
             handleSkipBack={handleSkipBack}
             handleSkipForward={handleSkipForward}
             setPlaying={setPlaying}
-            nowPlaying={key?.title}
+            nowPlaying={key}
             duration={duration}
             playtime={playtime}
           />

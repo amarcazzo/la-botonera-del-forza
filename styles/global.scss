@@ -13,6 +13,7 @@ body {
   font-size: 18px;
   background-color: #fcfcfc;
   height: 100vh;
+  width: 100vw;
   overflow: hidden;
 }
 
@@ -112,9 +113,14 @@ img {
 
     .progress {
       margin: 0;
+      min-width: 90px;
       height: 25px;
     }
   }
+}
+
+.decoration-none {
+  text-decoration: none !important;
 }
 
 @media (max-width: 1024px) {
@@ -158,13 +164,4 @@ img {
   .title {
     font-size: 32px;
   }
-}
-
-@media (max-width: 411px) {
-  .grid {
-    gap: 2rem;
-    grid-template-columns: repeat((2, 1fr));
-  }
-
-  
 }
